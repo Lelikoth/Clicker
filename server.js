@@ -61,48 +61,46 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    session = req.session;
-    session.email = req.body.email;
-    session.password = req.body.password;
-
-    db.get('SELECT * FROM users WHERE email = ? AND password = ?', [session.email, session.password], (err, row) => {
+    var email = req.body.email;
+    var password = req.body.password;
+    db.get('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], (err, row) => {
         if (err) {
             console.log("There is no such user!");
             res.redirect('/');
         }
         if (row) {
+            res.cookie("email", email);
+            res.cookie("password", password);
             res.redirect('/game');
         }
-});
+    });
 
 });
 
 app.get('/game', (req, res) => {
-    session = req.session;
-    if (session.email && session.password) {
-        db.get('SELECT * FROM users WHERE email = ? AND password = ?', [session.email, session.password], (err, row) => {
-            if (err) {
-                console.log(err);
-            }
-            else {
-                console.log(row);
-                session.pepe_points = row.pepe_points;
-                res.render('game.ejs', { pepe_points: row.pepe_points });
-            }
-        });
+    if (req.cookies.email && req.cookies.password) {
+        var email = req.cookies.email;
+        var password = req.cookies.password;
+    } else {
+        res.redirect('/login');
     }
-    else {
-        res.redirect('/logout');
-    }
+    db.get('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], (err, row) => {
+        if (err) {
+            console.log(err);
+        }
+        else if (row) {
+            res.render('game.ejs', { pepe_points: row.pepe_points });
+        } else {
+            res.redirect('/login');
+        }
+    });
+
 });
 
-
-app.post('/logout', (req, res) => {
-    
+app.post('/save', (req, res) => {
     let pepe_points = req.body.pepePoints;
-    session = req.session;
-    console.log(req.body);
-    db.run('UPDATE users SET pepe_points = ? WHERE email = ? AND password = ?', [pepe_points, session.email, session.password], (err) => {
+    console.log(pepe_points)
+    db.run('UPDATE users SET pepe_points = ? WHERE email = ? AND password = ?', [pepe_points, req.cookies.email, req.cookies.password], (err) => {
         if (err) {
             console.log(err);
         }
@@ -111,6 +109,12 @@ app.post('/logout', (req, res) => {
         }
     }
     );
+});
+
+app.post('/logout', (req, res) => {
+
+    res.clearCookie("email");
+    res.clearCookie("password");
     req.session.destroy((err) => {
         if (err) {
             console.log(err);
