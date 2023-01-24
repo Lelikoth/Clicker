@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel = "icon" href = "/img/pepe the frog.ico" type = "image/x-icon">
+    <title>Pepe Clicker</title>
+</head>
+<body>
+    <h3 id="Points">
+        <%= pepe_points %>
+    </h3>
+    <h1>Pepe Clicker</h1>
+    <div>
+        
+        <button onclick="myfunction()" class="pepebutton" >
+            <img src="/img/pepe_sad.png" alt="Sad Pepe">
+        </button>
+        <script>
+            let pepePoints = document.querySelector("#Points").innerHTML;
+            window.onload = function(){
+                document.querySelector("#pepePoints").innerHTML = "Pepe Points: " + pepePoints;
+            }
+            function myfunction(){
+                document.querySelector("img").src = "/img/happy_pepe.png";
+                setTimeout(function(){
+                    document.querySelector("img").src = "/img/pepe_sad.png";
+                }, 1000);
+                pepePoints++;
+                document.querySelector("#pepePoints").innerHTML = "Pepe Points: " + pepePoints;
+                document.querySelector("#sendPoints").value = pepePoints;
+                                
+            }
+        </script>
+    </div>
+    <h2 id="pepePoints">Pepe Points: </h2>
+    <form action="/logout" method="POST">
+        <button type="submit">Logout</button>
+        <input type="hidden" name="pepePoints" value="0" id="sendPoints">
+    </form>
+    
+</html>
