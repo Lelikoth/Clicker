@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel = "icon" href = "/img/pepe the frog.ico" type = "image/x-icon">
     <title>Pepe Clicker</title>
+
 </head>
 <body>
+    <audio loop autoplay><source src="music/rick.mp3"></audio>
     <h3 id="Points">
         <%= pepe_points %>
     </h3>
@@ -27,10 +29,11 @@
                 document.querySelector("img").src = "/img/happy_pepe.png";
                 setTimeout(function(){
                     document.querySelector("img").src = "/img/pepe_sad.png";
-                }, 1000);
+                }, 2000);
                 pepePoints++;
                 document.querySelector("#pepePoints").innerHTML = "Pepe Points: " + pepePoints;
                 document.querySelector("#sendPoints").value = pepePoints;
+                
                                 
             }
         </script>

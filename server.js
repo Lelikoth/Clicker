@@ -38,6 +38,11 @@ app.post('/', (req, res) => {
     let password = req.body.password;
     let password2 = req.body.password2;
 
+    if (email == '' || password == '' || password2 == '') {
+        console.log("Please fill in all fields!");
+        res.redirect('/');
+    }
+
     if (password == password2) {
         db.run('INSERT INTO users (email, password) VALUES (?, ?)', [email, password], (err) => {
             if (err) {
