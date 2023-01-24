@@ -29,7 +29,11 @@ app.use(sessions({
 var session;
 
 app.get('/', (req, res) => {
-    res.render('register.ejs');
+    if (req.cookies.email && req.cookies.password) {
+        res.redirect('/game');
+    } else {
+        res.render('register.ejs');
+    }
 });
 
 app.post('/', (req, res) => {
@@ -62,7 +66,11 @@ app.post('/', (req, res) => {
 
 
 app.get('/login', (req, res) => {
-    res.render('login.ejs');
+    if (req.cookies.email && req.cookies.password) {
+        res.redirect('/game');
+    } else {
+        res.render('login.ejs');
+    }
 });
 
 app.post('/login', (req, res) => {
@@ -94,7 +102,7 @@ app.get('/game', (req, res) => {
             console.log(err);
         }
         else if (row) {
-            res.render('game.ejs', { pepe_points: row.pepe_points });
+            res.render('game.ejs', { pepe_points: row.pepe_points , pepe_type: row.pepe_type });
         } else {
             res.redirect('/login');
         }
@@ -104,13 +112,15 @@ app.get('/game', (req, res) => {
 
 app.post('/save', (req, res) => {
     let pepe_points = req.body.pepePoints;
+    let pepe_type = req.body.pepeSkin;
     console.log(pepe_points)
-    db.run('UPDATE users SET pepe_points = ? WHERE email = ? AND password = ?', [pepe_points, req.cookies.email, req.cookies.password], (err) => {
+    db.run('UPDATE users SET pepe_points = ?, pepe_type = ? WHERE email = ? AND password = ?', [pepe_points, pepe_type, req.cookies.email, req.cookies.password], (err) => {
         if (err) {
             console.log(err);
         }
         else {
             console.log('User updated');
+            res.redirect('/game');
         }
     }
     );

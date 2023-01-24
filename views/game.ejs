@@ -10,9 +10,12 @@
 
 </head>
 <body>
-    <audio loop autoplay><source src="music/rick.mp3"></audio>
+    <audio loop autoplay><source src="music/elevator.mp3"></audio>
     <h3 id="Points">
         <%= pepe_points %>
+    </h3>
+    <h3 id="Skin">
+        <%= pepe_type %>
     </h3>
     <h1>Pepe Clicker</h1>
     <div>
@@ -22,30 +25,212 @@
         </button>
         <script>
             let pepePoints = document.querySelector("#Points").innerHTML;
+            let pepeSkin = document.querySelector("#Skin").innerHTML;
+        
             window.onload = function(){
-                document.querySelector("#pepePoints").innerHTML = "Pepe Points: " + pepePoints;
+                document.querySelector("#pepePoints").innerHTML = pepePoints;
+                document.querySelector("#sendPoints").value = pepePoints;
+                document.querySelector("#sendSkin").value = pepeSkin;
+                
+                if(pepeSkin == 1)
+                {
+                    document.querySelector("img").src = "/img/happy_pepe.png";
+                }
+                else if(pepeSkin == 2)
+                {
+                    document.querySelector("img").src = "/img/pepe_clown.png";
+                }
+                else if(pepeSkin == 3)
+                {
+                    document.querySelector("img").src = "/img/pepe_cry.png";
+                }
+                if(pepeSkin == 4)
+                {
+                    document.querySelector("img").src = "/img/happy_pope.png";
+                }
+                else if(pepeSkin == 5)
+                {
+                    document.querySelector("img").src = "/img/pepe_black.webp";
+                }
+                else if(pepeSkin == 6)
+                {
+                    document.querySelector("img").src = "/img/pepe_ree.gif";
+                }
             }
             function myfunction(){
-                document.querySelector("img").src = "/img/happy_pepe.png";
-                setTimeout(function(){
-                    document.querySelector("img").src = "/img/pepe_sad.png";
-                }, 2000);
                 pepePoints++;
-                document.querySelector("#pepePoints").innerHTML = "Pepe Points: " + pepePoints;
+                document.querySelector("#pepePoints").innerHTML = pepePoints;
                 document.querySelector("#sendPoints").value = pepePoints;
+                document.querySelector("#sendSkin").value = pepeSkin;
                 
                                 
             }
         </script>
     </div>
-    <h2 id="pepePoints">Pepe Points: </h2>
+    <h2>Pepe Points: </h2>
+    <h2 id="pepePoints"> </h2>
     <form action="/save" method="POST">
-        <button type="submit">Save</button>
+        <button type="submit">Save progress</button>
         <input type="hidden" name="pepePoints" value="0" id="sendPoints">
+        <input type="hidden" name="pepeSkin" value="0" id="sendSkin">
+
     </form>
     <form action="/logout" method="POST">
         <button type="submit">Logout</button>
     </form>
+
+    <div id="sixBox">
+        <div class="pepebutton">
+
+            <img src="/img/happy_pepe.png" alt="Happy Pepe">
+            <button onclick="myfunction2()">
+                30 Pepe Points
+            <script>
+                function myfunction2(){
+                    let pepePoints = document.querySelector("#pepePoints").innerHTML;
+                    if(pepePoints >= 30){
+                        pepePoints -= 30;
+                        document.querySelector("img").src = "/img/happy_pepe.png";
+                        document.querySelector("#pepePoints").innerHTML = pepePoints;
+                        document.querySelector("#sendPoints").value = pepePoints;
+                        document.querySelector("#sendSkin").value = 1;                  
+                    }
+                    else{
+                        alert("You don't have enough Pepe Points")
+                    }
+                }
+            </script>
+
+        </div>
+
+        
+        <div class="pepebutton">
+
+            <img src="/img/pepe_clown.png" alt="Clown Pepe">
+            <button onclick="myfunction3()">
+                200 Pepe Points
+            <script>
+                function myfunction3(){
+                    let pepePoints = document.querySelector("#pepePoints").innerHTML;
+
+                    if(pepePoints >= 200){
+                        pepePoints -= 200;
+                        document.querySelector("img").src = "/img/pepe_clown.png";
+                        document.querySelector("#pepePoints").innerHTML = pepePoints;
+                        document.querySelector("#sendPoints").value = pepePoints;
+                        document.querySelector("#sendSkin").value = 2;                 
+                    }
+                    else{
+                        alert("You don't have enough Pepe Points")
+                    }
+                }
+            </script>
+
+        </div>
+
+        
+        <div class="pepebutton">
+
+            <img src="/img/pepe_cry.png" alt="Cry Pepe">
+            <button onclick="myfunction4()">
+                500 Pepe Points
+            <script>
+                function myfunction4(){
+                    let pepePoints = document.querySelector("#pepePoints").innerHTML;
+
+                    if(pepePoints >= 500){
+                        pepePoints -= 500;
+                        document.querySelector("img").src = "/img/pepe_cry.png";
+                        document.querySelector("#pepePoints").innerHTML = pepePoints;
+                        document.querySelector("#sendPoints").value = pepePoints;
+                        document.querySelector("#sendSkin").value = 3;                  
+                    }
+                    else{
+                        alert("You don't have enough Pepe Points")
+                    }
+                }
+            </script>
+
+        </div>
+
+        
+        <div class="pepebutton">
+
+            <img src="/img/pepe_pope.jpg" alt="Pope Pepe">
+            <button onclick="myfunction5()">
+                2 137 Pepe Points
+            <script>
+                function myfunction5(){
+                    let pepePoints = document.querySelector("#pepePoints").innerHTML;
+
+                    if(pepePoints >= 2137){
+                        pepePoints -= 2137;
+                        document.querySelector("img").src = "/img/pepe_pope.png";
+                        document.querySelector("#pepePoints").innerHTML = pepePoints;
+                        document.querySelector("#sendPoints").value = pepePoints;
+                        document.querySelector("#sendSkin").value = 4;                  
+                    }
+                    else{
+                        alert("You don't have enough Pepe Points")
+                    }
+                }
+            </script>
+
+        </div>
+
+        
+        <div class="pepebutton">
+
+            <img src="/img/pepe_black.webp" alt="Black Pepe">
+            <button onclick="myfunction6()">
+                5 000 Pepe Points
+            <script>
+                function myfunction6(){
+                    let pepePoints = document.querySelector("#pepePoints").innerHTML;
+
+                    if(pepePoints >= 5000){
+                        pepePoints -= 5000;
+                        document.querySelector("img").src = "/img/pepe_black.webp";
+                        document.querySelector("#pepePoints").innerHTML = pepePoints;
+                        document.querySelector("#sendPoints").value = pepePoints;
+                        document.querySelector("#sendSkin").value = 5;                  
+                    }
+                    else{
+                        alert("You don't have enough Pepe Points")
+                    }
+                }
+            </script>
+
+        </div>
+
+        
+        <div class="pepebutton">
+
+            <img src="/img/pepe_ree.gif" alt="Reeeee Pepe">
+            <button onclick="myfunction7()">
+                10 000 Pepe Points
+            <script>
+                function myfunction7(){
+                    let pepePoints = document.querySelector("#pepePoints").innerHTML;
+
+                    if(pepePoints >= 10000){
+                        pepePoints -= 10000;
+                        document.querySelector("img").src = "/img/pepe_ree.gif";
+                        document.querySelector("#pepePoints").innerHTML = pepePoints;
+                        document.querySelector("#sendPoints").value = pepePoints;
+                        document.querySelector("#sendSkin").value = 6;                  
+                    }
+                    else{
+                        alert("You don't have enough Pepe Points")
+                    }
+                }
+            </script>
+
+        </div>
+        
+    </div>
+
+</body>
 
     
 </html>
