@@ -132,25 +132,5 @@ app.post('/logout', (req, res) => {
 
 });
 
-//check if cookie is still valid
-app.get('/check', (req, res) => {
-    session = req.session;
-    if (session.email && session.password) {
-        db.get('SELECT * FROM users WHERE email = ? AND password = ?', [session.email, session.password], (err, row) => {
-            if (err) {
-                console.log(err);
-            }
-            else {
-                console.log(row);
-                session.pepe_points = row.pepe_points;
-                res.render('game.ejs', { pepe_points: row.pepe_points });
-            }
-        });
-    }
-    else {
-        res.redirect('/');
-    }
-});
-
 
 app.listen(port);
